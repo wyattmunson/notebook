@@ -208,12 +208,19 @@ Set environment variables that can be used during the building of an image or in
 - Environment variables can be specified in the Dockerfile or the `docker run` command
 - Contrast with `ARG` where vaiables can be used in the build phase only
 
+Set environment variables in a Dockerfile:
+
 ```Dockerfile
 # set "workingdirectory" variable to "/opt/north"
 ENV workingdirectory /opt/north
 
 # consume "workingdirectory" variable
 WORKDIR $workingdirecotry
+
+# set build arg
+ARG NODE_VERSION=18
+# set env variable equal to build argument
+ENV ENV_NODE_VERSION=$NODE_VERSION
 ```
 
 Pass environment variables with `docker run`:
@@ -236,11 +243,9 @@ Build argments are parameters only available during the build phase.
 - Contrast with `ENV` where vaiables can be used in the build and run phase
 
 ```Dockerfile
-# set "workingdirectory" variable to "/opt/north"
-ENV workingdirectory /opt/north
+ARG NODE_VERSION=18.04
 
-# consume "workingdirectory" variable
-WORKDIR $workingdirecotry
+RUN echo "Node version is ${NODE_VERSION}"
 ```
 
 Pass environment variables with docker run:
