@@ -22,6 +22,9 @@ VARIABLE_NAME=some_text
 
 # reference a variable
 echo $VARIABLE_NAME
+
+# set variable equal to a command output
+VARIABLE_NAME=$(ls)
 ```
 
 ### Bash Builtin Variables
@@ -33,6 +36,7 @@ $#        # Number of arguments were passed to script
 $@        # All the arguments supplied to the Bash script.
 $?        # The exit status of the most recently run process.
 $$        # The process ID of the current script.
+$_        # Last argument of the previous command
 $USER     # The username of the user running the script.
 $HOSTNAME # The hostname of the machine the script is running on.
 $SECONDS  # The number of seconds since the script was started.
@@ -161,6 +165,31 @@ fi
 -ne # not equal
 ```
 
+### Bracket Syntax
+
+Bash has two types of syntax when dealing with if statements: `[single]` and `[[double]]`. Single is an older supported syntax and double allow for more features.
+
+#### Single Bracket Notation
+
+1. File based conditions `if [-L symlink]; then`
+1. String-based conditions `if ["$some_var" == "foo"]; then`
+1. Numeric-based conditions `if ["$some_var" -gt 100]; then`
+
+#### Double Bracket Notation
+
+1. **Equality operators**: introduces and (`&&`), or (`||`)
+   - `if [[ "$some_var" == "test" && $1 -gt 2 ]]; then`
+1. **Regex pattern matching**: introduces and (`&&`), or (`||`)
+   - `if [[ "$some_var" == "test" && $1 -gt 2 ]]; then`
+1. **Shell globbing**: asterisk will expand to anything
+   - `if [[ "$some_var" == *[Ff]oo ]]; then`
+1. **Word Splitting is prevented:** so quotes can be omitted around variables
+   - `if [[ $some_var == *[Ff]oo ]]; then`
+1. **Filenames are not expanded:**
+   - With the older single bracked notation `if [ -a *.sh ]; then`. This will return true if there's a single matching shell file. Return false if there are no files. Return an error if
+   - With double bracket notation, it will return true if there are one or more shell files
+   - `if [[ $some_var == *[Ff]oo ]]; then`
+
 ---
 
 ## Redirection
@@ -170,6 +199,8 @@ fi
 command >file
 # same as above
 command 1>file
+# redirect stdout to file (append to end of file)
+command >>file
 # redirect stderr to file
 command 2>file
 # redirect stdout & stderr to file
@@ -199,27 +230,111 @@ EOL
 
 ---
 
-## Bracket Syntax
+## Functions
 
-Bash has two types of syntax when dealing with if statements: `[single]` and `[[double]]`. Single is an older supported syntax and double allow for more features.
+```bash
+function_name() {
+  echo "Hello $1"
+}
 
-### Single Bracket Notation
+function_name first_argument
+```
 
-1. File based conditions `if [-L symlink]; then`
-1. String-based conditions `if ["$some_var" == "foo"]; then`
-1. Numeric-based conditions `if ["$some_var" -gt 100]; then`
+### Returning Values
 
-### Double Bracket Notation
+```bash
+function_name() {
+  local some_var='some value'
+  echo "$(some_var)"
+}
 
-1. **Equality operators**: introduces and (`&&`), or (`||`)
-   - `if [[ "$some_var" == "test" && $1 -gt 2 ]]; then`
-1. **Regex pattern matching**: introduces and (`&&`), or (`||`)
-   - `if [[ "$some_var" == "test" && $1 -gt 2 ]]; then`
-1. **Shell globbing**: asterisk will expand to anything
-   - `if [[ "$some_var" == *[Ff]oo ]]; then`
-1. **Word Splitting is prevented:** so quotes can be omitted around variables
-   - `if [[ $some_var == *[Ff]oo ]]; then`
-1. **Filenames are not expanded:**
-   - With the older single bracked notation `if [ -a *.sh ]; then`. This will return true if there's a single matching shell file. Return false if there are no files. Return an error if
-   - With double bracket notation, it will return true if there are one or more shell files
-   - `if [[ $some_var == *[Ff]oo ]]; then`
+result=$(function_name)
+```
+
+### Handling Errors
+
+```bash
+function_name() {
+  return 1
+}
+
+if function_name; then
+  echo "Great success"
+else
+  echo "Failure"
+fi
+```
+
+---
+
+## Loops
+
+Loop there it is.
+
+```bash
+for i in TEST; do
+  echo "$i"
+done
+```
+
+### Ranges
+
+While true...
+
+```bash
+for i in {1..5}; do
+  ...
+done
+```
+
+With step size
+
+```bash
+for i in {1..100..2}; do
+  echo "Hello $i"
+done
+```
+
+### Forever
+
+While true...
+
+```bash
+while true; do
+  ...
+done
+```
+
+### Reading Lines
+
+```bash
+while read -r line; do
+  echo $line
+done <file_name
+```
+
+### Iterate Loop
+
+```bash
+for ((i = 0 ; i < 100 ; i++)) do
+  echo $i
+done
+```
+
+---
+
+## Misc
+
+```bash
+echo "You're in $(pwd)"
+```
+
+Echo output and write to file
+
+```bash
+echo_and_write() {
+  echo $* | tee -a file_name
+}
+
+echo_and_write "Some string to echo/write"
+```
