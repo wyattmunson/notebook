@@ -55,6 +55,8 @@ read -sp 'Enter password: ' VARIABLE_NAME
 
 ### Check if Variable Exists
 
+Bash scripts that expect environment variables can be enriched by checking to see if the variables exist before running the remainder of the script. Help text can be provided and an exit code can be thrown if the conditions are not met.
+
 ```bash
 #check if variable exists
 if [ -n "$1" ]; then
