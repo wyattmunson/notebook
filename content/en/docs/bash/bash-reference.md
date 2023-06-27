@@ -27,6 +27,7 @@ toc: true
 | [file](#file-command)                           | file                            | Display file type                                         |
 | [find](#find-command)                           | find                            | Find a file                                               |
 | [echo](#echo-command)                           | echo                            | Print output to the terminal                              |
+| [exit](#exit-command)                           | exit                            | Exit current script or shell session                      |
 | [export](#export---export)                      | export                          | Export a variable                                         |
 | [grep](#grep---global-regular-expression-print) | global regular expression print | Use regex to find files                                   |
 | [kill](#kill-command)                           | kill                            | Stop a running process                                    |
@@ -100,6 +101,8 @@ $ cd ..                     # move up one directory
 $ cd -                      # return to previous directory
 # pwd /users/benish/code/lounge-frontend
 ```
+
+---
 
 ## `chmod` - CHange MODe
 
@@ -185,6 +188,8 @@ chmod 764 FILE_NAME
 chmod 777 FILE_NAME
 ```
 
+---
+
 ## `cp` - CoPy
 
 ```bash
@@ -231,6 +236,8 @@ Other `cp` commands
 ```bash
 $ cp -i s.txt f.txt # interactive - promt before overwriting
 ```
+
+---
 
 ## `curl` - Client URL
 
@@ -311,6 +318,8 @@ curl -k https://secure.example.com
 curl --resolve www.example.org:80:127.0.0.1 http://www.example.org/
 ```
 
+---
+
 ## `cut` - CUT
 
 Cut stuff.
@@ -352,6 +361,8 @@ Use the `-d` flag to specify a delimeter.
 ```bash
 cut sales.txt -d ":" -f 1,2
 ```
+
+---
 
 ## `dig` - Domain Information Grouper
 
@@ -400,7 +411,9 @@ Request different types of records
 - MX = Mail eXchange (mail servers)
 - NS = Name Server
 
-### `export` - EXPORT
+---
+
+## `export` - EXPORT
 
 Mark variables and functions to be passed to child shells and processes.
 
@@ -420,6 +433,8 @@ export VERSION=`grep '"version":' package.json | cut -d\" -f4`
 export IMAGE_NAME_AND_TAG=$(cat .dev-image-name-and-tag)
 echo $IMAGE_NAME_AND_TAG > .stage-image-name-and-tag
 ```
+
+---
 
 ## `file` command
 
@@ -443,6 +458,8 @@ file /dev/sda5
 file -s /dev/sda5
 
 ```
+
+---
 
 ## `find` command
 
@@ -470,6 +487,8 @@ find . -name search_text -mtime 4
 find . -name search_text -type f
 ```
 
+---
+
 ## `echo` command
 
 Prints text to the terminal window.
@@ -478,6 +497,19 @@ Prints text to the terminal window.
 $ echo some text
 ↪ some text
 ```
+
+---
+
+## `exit` command
+
+Exit current shell session with a given exit code.
+
+```bash
+# exit current shell with exit code 1
+exit 1
+```
+
+---
 
 ## `grep` - Global Regular Expression Print
 
@@ -518,6 +550,8 @@ ls | grep *report*
 grep -c "keyword" log.txt
 ```
 
+---
+
 ## `kill` command
 
 Stop a process by process ID.
@@ -540,6 +574,8 @@ $ kill -9 ./applications-service
 # 9 (SIGKILL) - is the most common command to terminate a process
 $ kill -l
 ```
+
+---
 
 ## `ls` - LiSt
 
@@ -585,6 +621,8 @@ ls -lah
   -i
 ```
 
+---
+
 ## `lsof` - LiSt Open Files
 
 Use it to check if a process is running on a given port.
@@ -594,6 +632,8 @@ lsof -i :5432
 ```
 
 `lsof` may be in `/usr/sbin` and needs to be invoked directly (`/usr/sbin/lsof -i :5432`).
+
+---
 
 ## `sudo` - Super User DO
 
@@ -628,6 +668,8 @@ sudo groupdel
 sudo usermod -g
 ```
 
+---
+
 ## `man` - MANual
 
 Show manual page for a given command. Use to show the manual for any bash command.
@@ -636,6 +678,8 @@ Show manual page for a given command. Use to show the manual for any bash comman
 man COMMAND
 man ls
 ```
+
+---
 
 ## `mkdir` - MaKe DIRectory
 
@@ -648,6 +692,8 @@ mkdir some directory
 # copy subdirectories
 -p
 ```
+
+---
 
 ## `ps` - Process Status
 
@@ -672,6 +718,8 @@ ps aux | grep keyword
 ps auxwww | grep postgres
 ```
 
+---
+
 ## `pwd` - Print Working Directory
 
 Displays the current directory you're in.
@@ -680,6 +728,8 @@ Displays the current directory you're in.
 $ pwd
 ↪ /home/greg/documents
 ```
+
+---
 
 ## `rm` - ReMove
 
@@ -696,6 +746,8 @@ rm -r directory_name
 rm -f file_name
 ```
 
+---
+
 ## `scp` - Secure CoPy
 
 Secure copy is used to securely transfer files from one host to another.
@@ -704,6 +756,8 @@ Secure copy is used to securely transfer files from one host to another.
 scp -i SOURCE TARGET
 scp -i /home/file.txt user@host:/app/data/file.txt
 ```
+
+---
 
 ## `sed` - Stream EDitor
 
@@ -714,6 +768,8 @@ sed -i "s,TEXT_TO_FIND,TEXT_TO_REPLACE_WITH,g"
 sed -i "s,<SOMETHING_TO_FIND>,REPLACE_TEXT,g" someFile.txt
 ```
 
+---
+
 ## `ssh` - openSSH client
 
 Remote login program
@@ -721,6 +777,8 @@ Remote login program
 ```
 $ ssh -i keyName.pem ec2-user@whatever.amazonaws.com
 ```
+
+---
 
 ## `tail` command
 
@@ -751,6 +809,8 @@ tail -b 50 FILE_NAME
 # specify 50 bytes
 tail -c 50 FILE_NAME
 ```
+
+---
 
 ## `touch` command
 
@@ -788,6 +848,8 @@ touch -a FILE_NAME
 
 ```
 
+---
+
 ## `type` command
 
 Type give the user information about the command type.
@@ -795,6 +857,8 @@ Type give the user information about the command type.
 ```
 type [OPTIONS] FILE_NAME...
 ```
+
+---
 
 ## `xargs`
 

@@ -8,7 +8,7 @@ draft: false
 images: []
 menu:
   docs:
-    parent: ""
+    parent: "guides"
     identifier: "bash-cheatsheet-92beadd4d4659911b67d21bcd0e33c74"
 weight: 999
 toc: true
@@ -165,6 +165,11 @@ cat FILE_NAME
 cat -n FILE_NAME
 # display number of lines (alternate)
 nl FILE_NAME
+wc FILE_NAME
+# display matching lines
+cat FILE_NAME | grep -i "search text"
+# get line count of matching lines
+cat FILE_NAME | grep -i "search text" | wc
 
 # display first 10 lines of file to terminal window
 head FILE_NAME
@@ -180,6 +185,25 @@ less FILE_NAME
 
 # find differences in two files
 diff file_name1 file_name2
+
+# print every row of 2nd column
+awk -F ',' '{print $2}' airports.csv
+# print distinct values of 2nd column
+awk -F ',' '{print $2}' airports.csv | sort -u
+# print each value in 10th column with count (duplicates only)
+cut -f10 -d, "airports.csv" | sort | uniq -cd | sed 's/  *//'
+# print each value in 10th column with count
+cut -f10 -d, "airports.csv" | sort | uniq -c | sed 's/  *//'
+
+# removes lines where given column is empty
+awk '$1!=""' input_file
+
+# partial match of text in given column
+awk -F ',' '$6~/no longer/' reduced_airlines.csv
+
+# awk variable
+awk '/'$VAR'/' airlines.csv
+awk -F ',' '$3~/'$VAR'/' airlines.csv
 ```
 
 ### Finding a file
@@ -219,7 +243,7 @@ file -f file_list.txt
 # check inside compressed files
 file -z file_name
 
-# check file line count
+# check file line count (display: lines, words, bytes)
 wc file_name
 ```
 
@@ -283,6 +307,88 @@ su USER
 su -
 # execute command as super user
 sudo COMMAND
+```
+
+## Variables
+
+```bash
+# set a variable
+VARIABLE_NAME=some_text
+
+# reference a variable
+echo $VARIABLE_NAME
+```
+
+### Bash Builtin Variables
+
+```bash
+$0        # Name of the Bash script
+$1 - $9   # First 9 arguments to the script
+$#        # Number of arguments were passed to script
+$@        # All the arguments supplied to the Bash script.
+$?        # The exit status of the most recently run process.
+$$        # The process ID of the current script.
+$USER     # The username of the user running the script.
+$HOSTNAME # The hostname of the machine the script is running on.
+$SECONDS  # The number of seconds since the script was started.
+$RANDOM   # Returns a different random number each time is it referred to.
+$LINENO   # Returns the current line number in the Bash script.
+```
+
+### Reading Input
+
+```bash
+# set a variable
+read VARIABLE_NAME
+# set a variable, with prompt statement
+read -p 'Enter name: ' VARIABLE_NAME
+# set a variable, with prompt statement, password
+read -sp 'Enter password: ' VARIABLE_NAME
+```
+
+## If Statements
+
+```bash
+if [ $1 -gt 100]
+then
+  echo "Some text"
+elif [ $2 == 'no']
+then
+  echo "Alternate matching condition"
+else
+  echo "Final catch condition"
+fi
+```
+
+### Wildcards
+
+```bash
+if [[ $1 == *"$SUBSTRING"* ]]
+```
+
+### Boolean Operators
+
+```bash
+&&  # and
+||  # or
+```
+
+```bash
+if [[ $1 -gt 100 && $2 == 'yes']]
+elif [[ $1 -gt 50 || $2 == 'no']]
+```
+
+### Equality Operators
+
+```bash
+=
+==  # string comparisons
+-eq # equals, numeric comparisons
+-gt # greater than
+-ge # greater than or equal to
+-lt # less than
+-le # less than or equal to
+-ne # not equal
 ```
 
 ## Networking

@@ -24,21 +24,42 @@ docker images
 
 # View all running containers
 docker ps
+```
 
+### Build Docker Image
+
+```bash
 # build a docker image
 docker build .
+
+# build docker image and specify tag
 docker build . -t munsonwf/express-sample:1.2.3
 
 # feed env variables in a command line
 docker build . --build-arg DB_PASSWORD=hunter2
+```
 
-# run container in detached mode
-docker run --rm -it mysql:5.6.12
+### Run Docker container
+
+```bash
+# run docker container
+docker run alpine:latest
 
 # exec into running container
 docker exec -it <CONTAINER_ID> <COMMAND>
 docker exec -it fe93b2ca2 /bin/bash
 
+# run exec against stopped container
+docker run --rm -it <REPO_NAME> <EXEC_COMMAND>
+docker run --rm -it gitlab/gitlab-runner:2.0.3 bin/bash
+
+# run exec against stopped container (override entrypoint)
+docker run --rm -ti --entrypoint='' munsonwf/nslookup:1.0.0 /bin/ash
+```
+
+### Logs from Docker container
+
+```bash
 # View container logs and tail output
 sudo docker logs CONTAINER-NAME --follow
 
@@ -59,13 +80,6 @@ docker commit <CONTAINER NAME>
 
 # tag image you've created
 docker tag <IMAGE_ID> <NEW_NAME>
-
-# run exec against stopped container
-docker run --rm -it <REPO_NAME> <EXEC_COMMAND>
-docker run --rm -it gitlab/gitlab-runner:2.0.3 bin/bash
-
-# run exec against stopped container (override entrypoint)
-docker run --rm -ti --entrypoint='' munsonwf/nslookup:1.0.0 /bin/ash
 
 # inspect container (see entrypoint, CMD)
 docker inspect <IMAGE ID>
