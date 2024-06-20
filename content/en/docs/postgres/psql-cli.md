@@ -119,3 +119,11 @@ CREATE USER username;
 # select data from a table in schema
 SELECT * FROM schema_name.table_name;
 ```
+
+## Homebrew Postgres
+
+```bash
+brew info postgres
+brew info postgresql
+brew services start postgresql@14
+```

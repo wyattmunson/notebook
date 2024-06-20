@@ -49,6 +49,25 @@ Each instruction forms one layer:
 - `RUN` - kick off build process using `make`
 - `CMD` - specify command to run within container
 
+### Environment Variables
+
+Can be supplied on run
+
+```bash
+docker run -e MY_VAR=hello -it ubuntu:latest bash
+```
+
+Can be supplied with `.env` file
+
+```env
+DB_HOST=localhost
+DB_PASSWORD=secret
+```
+
+```bash
+docker run --env-file .env -it ubuntu:latest bash
+```
+
 ## Dockerfile Instruction Reference
 
 ### FROM
@@ -205,7 +224,7 @@ Set environment variables that can be used during the building of an image or in
 
 - Typically API keys, database connection strings, secrets, ect.
 - They can be used for building the image or for a running container
-- Environment variables can be specified in the Dockerfile or the `docker run` command
+- Environment variables specified in the Dockerfile are overridden by the `docker run -e` command
 - Contrast with `ARG` where vaiables can be used in the build phase only
 
 Set environment variables in a Dockerfile:

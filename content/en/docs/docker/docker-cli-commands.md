@@ -55,6 +55,9 @@ docker run --rm -it gitlab/gitlab-runner:2.0.3 bin/bash
 
 # run exec against stopped container (override entrypoint)
 docker run --rm -ti --entrypoint='' munsonwf/nslookup:1.0.0 /bin/ash
+
+# run
+docker run -e DB_PASSWORD=hello -it ubuntu:latest some-command
 ```
 
 ### Logs from Docker container
